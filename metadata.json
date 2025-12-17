@@ -1,0 +1,7 @@
+{
+  "name": "NovaMarket Elite",
+  "description": "A premium, AI-powered e-commerce platform featuring smart product discovery, real-time inventory management, and a seamless shopping experience integrated with Gemini AI for personalized recommendations.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
