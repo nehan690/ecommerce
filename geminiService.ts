@@ -2,9 +2,15 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { PRODUCTS } from "./constants";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY || '';
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 export const getShoppingAssistantResponse = async (userMessage: string, cartItems: any[]) => {
+  // Check if API key is missing
+  if (!apiKey || !ai) {
+    return "I'm currently unavailable, but you can browse our curated collections above! Use the search bar or category filters to find exactly what you're looking for.";
+  }
+
   const productsContext = PRODUCTS.map(p => `${p.name} ($${p.price}) in ${p.category}: ${p.description}`).join('\n');
   const cartContext = cartItems.length > 0 
     ? `Current items in user's cart: ${cartItems.map(i => `${i.name} (Qty: ${i.quantity})`).join(', ')}` 
